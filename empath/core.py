@@ -13,6 +13,9 @@ class Empath:
         self.backend_url = backend_url
         self.base_dir = os.path.dirname(util.__file__)
         self.load(self.base_dir+"/data/categories.tsv")
+        for f in os.listdir(self.base_dir+"/data/user/"):
+            print("loading ",f)
+            self.load(self.base_dir+"/data/user/"+f)
 
     def load(self,file):
         with open(file,"r") as f:
@@ -52,12 +55,6 @@ class Empath:
         resp = requests.post(self.backend_url + "/create_category", json={"terms":seeds,"size":size})
         print(resp.text)
         results = json.loads(resp.text)
-        self.staging[name] = results
-        print("Save this category by calling .save_category('{}')".format(name))
-        print(name, results)
-
-    def save_category(self,name):
-        if not name in staging:
-            raise Exception("not category {} in staging".format(name))
-        else: self.cats[name] = self.staging[name]
-        del self.staging[name]
+        self.cats[name] = results
+        with open(self.base_dir+"/data/user/"+name) as f:
+            f.write("\t".join([name]+results))
