@@ -8,7 +8,8 @@ import json
 class Empath:
     def __init__(self, backend_url="http://localhost:8000"):
         self.cats = defaultdict(list)
-        self.invcats = defaultdict(list)
+        #self.invcats = defaultdict(list)
+        self.staging = {}
         self.backend_url = backend_url
         self.base_dir = os.path.dirname(util.__file__)
         self.load(self.base_dir+"/data/categories.tsv")
@@ -21,27 +22,42 @@ class Empath:
                 terms = cols[1:]
                 for t in terms:
                     self.cats[name].append(t)
-                    self.invcats[t].append(name)
+                    #self.invcats[t].append(name)
 
-    def analyze(self,doc,tokenizer="default",normalize=True):
+    def analyze(self,doc,cats=None,tokenizer="default",normalize=True):
         if tokenizer == "default":
             tokenizer = util.default_tokenizer
         elif tokenizer == "bigrams":
             tokenizer = util.bigram_tokenizer
         if not hasattr(tokenizer,"__call__"):
             raise Exception("invalid tokenizer")
+        if not cats:
+            cats = self.cats.keys()
+        invcats = defaultdict(list)
+        for k in cats:
+           for t in self.cats[k]: invcats[t].append(k)
         count = {}
         tokens = 0.0
-        for cat in self.cats.keys(): count[cat] = 0.0
+        for cat in cats: count[cat] = 0.0
         for tk in tokenizer(doc):
             tokens += 1.0
-            for cat in self.invcats[tk]:
+            for cat in invcats[tk]:
                 count[cat]+=1.0
         if normalize:
             for cat in count.keys():
                 count[cat] = count[cat] / tokens
         return count
 
-    def create_category(self,seeds):
-        resp = requests.get(self.backend_url + "/create_category", json={"terms":seeds})
-        return json.loads(resp.text)
+    def create_category(self,name,seeds,size=100):
+        resp = requests.post(self.backend_url + "/create_category", json={"terms":seeds,"size":size})
+        print(resp.text)
+        results = json.loads(resp.text)
+        self.staging[name] = results
+        print("Save this category by calling .save_category('{}')".format(name))
+        print(name, results)
+
+    def save_category(self,name):
+        if not name in staging:
+            raise Exception("not category {} in staging".format(name))
+        else: self.cats[name] = self.staging[name]
+        del self.staging[name]
