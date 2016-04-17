@@ -24,7 +24,7 @@ class Empath:
                 cols = line.strip().split("\t")
                 name = cols[0]
                 terms = cols[1:]
-                for t in terms:
+                for t in set(terms):
                     self.cats[name].append(t)
                     #self.invcats[t].append(name)
 
@@ -56,6 +56,6 @@ class Empath:
         resp = requests.post(self.backend_url + "/create_category", json={"terms":seeds,"size":size})
         print(resp.text)
         results = json.loads(resp.text)
-        self.cats[name] = results
-        with open(self.base_dir+"/data/user/"+name) as f:
+        self.cats[name] = list(set(results))
+        with open(self.base_dir+"/data/user/"+name+".empath","w") as f:
             f.write("\t".join([name]+results))
