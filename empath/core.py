@@ -2,11 +2,14 @@ import os
 import sys
 from collections import defaultdict
 from . import helpers as util
+import requests
+import json
 
 class Empath:
     def __init__(self, backend_url="http://localhost:8000"):
         self.cats = defaultdict(list)
         self.invcats = defaultdict(list)
+        self.backend_url = backend_url
         self.base_dir = os.path.dirname(util.__file__)
         self.load(self.base_dir+"/data/categories.tsv")
 
@@ -38,3 +41,7 @@ class Empath:
             for cat in count.keys():
                 count[cat] = count[cat] / tokens
         return count
+
+    def create_category(self,seeds):
+        resp = requests.get(self.backend_url + "/create_category", json={"terms":seeds})
+        return json.loads(resp.text)
