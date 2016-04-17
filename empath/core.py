@@ -14,8 +14,9 @@ class Empath:
         self.base_dir = os.path.dirname(util.__file__)
         self.load(self.base_dir+"/data/categories.tsv")
         for f in os.listdir(self.base_dir+"/data/user/"):
-            print("loading ",f)
-            self.load(self.base_dir+"/data/user/"+f)
+            if len(f.split(".")) > 1 and f.split(".")[1] == "empath":
+                print("loading ",f)
+                self.load(self.base_dir+"/data/user/"+f)
 
     def load(self,file):
         with open(file,"r") as f:
