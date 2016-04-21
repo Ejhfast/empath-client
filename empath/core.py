@@ -6,9 +6,8 @@ import requests
 import json
 
 class Empath:
-    def __init__(self, backend_url="http://localhost:8000"):
+    def __init__(self, backend_url="http://54.148.189.209:8000"):
         self.cats = defaultdict(list)
-        #self.invcats = defaultdict(list)
         self.staging = {}
         self.backend_url = backend_url
         self.base_dir = os.path.dirname(util.__file__)
