@@ -52,8 +52,8 @@ class Empath:
                 count[cat] = count[cat] / tokens
         return count
 
-    def create_category(self,name,seeds,size=100):
-        resp = requests.post(self.backend_url + "/create_category", json={"terms":seeds,"size":size})
+    def create_category(self,name,seeds,model="fiction",size=100):
+        resp = requests.post(self.backend_url + "/create_category", json={"terms":seeds,"size":size,"model":model})
         print(resp.text)
         results = json.loads(resp.text)
         self.cats[name] = list(set(results))
