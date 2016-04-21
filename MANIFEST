@@ -3,4 +3,6 @@ setup.py
 empath/__init__.py
 empath/core.py
 empath/helpers.py
+empath/data/categories.tsv
+empath/data/user/blank
 test/test.py

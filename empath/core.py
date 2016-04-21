@@ -51,10 +51,17 @@ class Empath:
                 count[cat] = count[cat] / tokens
         return count
 
-    def create_category(self,name,seeds,size=100):
+    def create_category(self,name,seeds,size=100,write=True):
         resp = requests.post(self.backend_url + "/create_category", json={"terms":seeds,"size":size})
         print(resp.text)
         results = json.loads(resp.text)
         self.cats[name] = list(set(results))
-        with open(self.base_dir+"/data/user/"+name+".empath","w") as f:
-            f.write("\t".join([name]+results))
+        if write:
+            with open(self.base_dir+"/data/user/"+name+".empath","w") as f:
+                f.write("\t".join([name]+results))
+
+    def delete_category(self,name):
+        if name in self.cats: del self.cats[name]
+        filename = self.base_dir+"/data/user/"+name+".empath"
+        if os.path.isfile(filename):
+            os.remove(filename)
