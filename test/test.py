@@ -1,3 +1,3 @@
-from .context import Empath
+from context import Empath
 
 empath = Empath()

@@ -27,21 +27,21 @@ class Empath:
                     self.cats[name].append(t)
                     #self.invcats[t].append(name)
 
-    def analyze(self,doc,cats=None,tokenizer="default",normalize=True):
+    def analyze(self,doc,categories=None,tokenizer="default",normalize=True):
         if tokenizer == "default":
             tokenizer = util.default_tokenizer
         elif tokenizer == "bigrams":
             tokenizer = util.bigram_tokenizer
         if not hasattr(tokenizer,"__call__"):
             raise Exception("invalid tokenizer")
-        if not cats:
-            cats = self.cats.keys()
+        if not categories:
+            categories = self.cats.keys()
         invcats = defaultdict(list)
-        for k in cats:
+        for k in categories:
            for t in self.cats[k]: invcats[t].append(k)
         count = {}
         tokens = 0.0
-        for cat in cats: count[cat] = 0.0
+        for cat in categories: count[cat] = 0.0
         for tk in tokenizer(doc):
             tokens += 1.0
             for cat in invcats[tk]:
@@ -51,8 +51,9 @@ class Empath:
                 count[cat] = count[cat] / tokens
         return count
 
-    def create_category(self,name,seeds,size=100,write=True):
-        resp = requests.post(self.backend_url + "/create_category", json={"terms":seeds,"size":size})
+
+    def create_category(self,name,seeds,model="fiction",size=100,write=True):
+        resp = requests.post(self.backend_url + "/create_category", json={"terms":seeds,"size":size,"model":model})
         print(resp.text)
         results = json.loads(resp.text)
         self.cats[name] = list(set(results))
