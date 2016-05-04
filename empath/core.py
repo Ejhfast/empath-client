@@ -27,7 +27,7 @@ class Empath:
                     self.cats[name].append(t)
                     #self.invcats[t].append(name)
 
-    def analyze(self,doc,categories=None,tokenizer="default",normalize=True):
+    def analyze(self,doc,categories=None,tokenizer="default",normalize=False):
         if tokenizer == "default":
             tokenizer = util.default_tokenizer
         elif tokenizer == "bigrams":
