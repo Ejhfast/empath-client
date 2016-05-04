@@ -1,8 +1,9 @@
-from distutils.core import setup
+#from distutils.core import setup
+from setuptools import setup
 setup(
   name = 'empath',
   packages = ['empath'], # this must be the same as the name above
-  version = '0.07',
+  version = '0.08',
   description = 'A tool for text analysis',
   author = 'Ethan Fast',
   author_email = 'ejhfast@gmail.com',
