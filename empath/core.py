@@ -28,6 +28,8 @@ class Empath:
                     #self.invcats[t].append(name)
 
     def analyze(self,doc,categories=None,tokenizer="default",normalize=False):
+        if isinstance(doc,list):
+            doc = "\n".join(doc)
         if tokenizer == "default":
             tokenizer = util.default_tokenizer
         elif tokenizer == "bigrams":
