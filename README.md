@@ -6,8 +6,8 @@ pip install empath
 ~~~~
 Then in a python shell, import like this:
 ```python
-  from empath import Empath
-  lexicon = Empath()
+from empath import Empath
+lexicon = Empath()
 ```
 Analyze text over all pre-built categories:
 ```python
