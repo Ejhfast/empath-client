@@ -30,7 +30,7 @@ lexicon.create_category("colors",["red","blue","green"])
 # => ["blue", "green", "purple", "purple", "green", "yellow", "red", "grey", "violet", "gray", "blue", "orange", "white", "pink", "yellow", "black", "brown", "brown", "red", "aqua", "turquoise", "blue_color", "colored", "color", "same_shade", "violet", "gray", "grey", "teal", "nice_shade", "coloured", "forest_green", "colored", "different_shade", "colour", "sparkly", "reddish", "beautiful_shade", "greenish", "indigo", "darker_shade", "emerald", "lovely_shade", "tints", "crimson", "dark_purple", "pink", "emerald", "sapphire", "golden", "lighter_shade", "lime_green", "coloured", "bright", "same_color", "specks", "red", "golden_color", "different_shades", "chocolate_brown", "orange", "bluish", "green", "deep_purple", "magenta", "green_color", "dark_shade", "bright_orange", "milky", "lilac", "light_brown", "sparkling", "golden_brown", "silvery", "baby_blue", "blood_red", "pink", "teal", "blue", "yellowish", "turquoise", "same_colour", "sparkly", "aquamarine", "black_color", "white", "cerulean", "perfect_shade", "dark", "speckled", "charcoal", "greyish", "midnight_blue", "emerald_green", "deep_brown", "ocean_blue", "flecks", "amber", "pinkish", "jet_black"]
 ```
 Then analyze with those categories:
-```
+```python
 lexicon.analyze("My favorite color is blue", categories=["colors"], normalize=True)
 # => {'colors': 0.4}
 ```
