@@ -1,12 +1,12 @@
 You can install in python via pip:
-
-  pip install empath
-
+~~~~
+pip install empath
+~~~~
 Then in a python shell, import like this:
-
+```python
   >>> from empath import Empath
   >>> lexicon = Empath()
-
+```
 Analyze text over all pre-built categories:
 
   >>> lexicon.analyze("he hit the other person",normalize=True)
