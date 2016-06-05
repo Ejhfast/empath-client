@@ -8,7 +8,7 @@ def window(seq, n):
     it = iter(seq)
     result = tuple(islice(it, n))
     if len(result) == n:
-        yield result    
+        yield result
     for elem in it:
         result = result[1:] + (elem,)
         yield result
@@ -26,9 +26,8 @@ def bigram_tokenizer(doc):
 def window_tokenizer(window_size, targets):
     def window_func(doc,target_dic={t:t for t in targets}):
         tokens = doc.split()
-        print(tokens)
         for w in partitions(tokens, window_size):
             if any([x in target_dic for x in w]):
-                for w_ in w: 
+                for w_ in w:
                     yield w_
     return window_func
