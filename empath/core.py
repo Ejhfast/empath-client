@@ -27,6 +27,10 @@ class Empath:
                     self.cats[name].append(t)
                     #self.invcats[t].append(name)
 
+    def analyze_term_window(self,doc,targets,categories=None,window_size=10,normalize=False):
+        tokenizer = util.window_tokenizer(window_size,targets)
+        return self.analyze(doc,categories,tokenizer,normalize)
+
     def analyze(self,doc,categories=None,tokenizer="default",normalize=False):
         if isinstance(doc,list):
             doc = "\n".join(doc)
