@@ -11,6 +11,7 @@ class Empath:
         self.staging = {}
         self.backend_url = backend_url
         self.base_dir = os.path.dirname(util.__file__)
+        self.inv_cache = {}
         self.load(self.base_dir+"/data/categories.tsv")
         for f in os.listdir(self.base_dir+"/data/user/"):
             if len(f.split(".")) > 1 and f.split(".")[1] == "empath":
@@ -42,8 +43,13 @@ class Empath:
         if not categories:
             categories = self.cats.keys()
         invcats = defaultdict(list)
-        for k in categories:
-           for t in self.cats[k]: invcats[t].append(k)
+        key = tuple(sorted(categories))
+        if key in self.inv_cache:
+            invcats = self.inv_cache[key]
+        else:
+            for k in categories:
+                for t in self.cats[k]: invcats[t].append(k)
+            self.inv_cache[key] = invcats
         count = {}
         tokens = 0.0
         for cat in categories: count[cat] = 0.0
