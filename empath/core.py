@@ -52,6 +52,7 @@ class Empath:
             for cat in invcats[tk]:
                 count[cat]+=1.0
         if normalize:
+            if tokens == 0: return 0
             for cat in count.keys():
                 count[cat] = count[cat] / tokens
         return count
