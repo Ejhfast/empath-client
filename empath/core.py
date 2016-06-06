@@ -54,7 +54,7 @@ class Empath:
         if normalize:
             for cat in count.keys():
                 if tokens == 0:
-                    count[cat] = 0
+                    return None
                 else:
                     count[cat] = count[cat] / tokens
         return count
