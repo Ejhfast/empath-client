@@ -1,4 +1,4 @@
-Empath is a tool for analyzing text across lexical categories (similar to  LIWC), and also generating new lexical categories to use for an analysis. See our [paper](http://hci.stanford.edu/publications/empath-chi-2016.pdf). 
+Empath is a tool for analyzing text across lexical categories (similar to  LIWC), and also generating new lexical categories to use for an analysis. See our [paper](https://hci.stanford.edu/publications/2016/ethan/empath-chi-2016.pdf). 
 
 You can install in python via pip:
 ~~~~
